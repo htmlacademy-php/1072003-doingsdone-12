@@ -57,7 +57,7 @@
                         <a class="download-link" href="#">Home.psd</a>
                     </td>
 
-                    <td class="task_date"><?= htmlspecialchars($val['task_date']); ?></td>
+                    <td class="task__date"><?= htmlspecialchars($val['task_date']); ?></td>
                 </tr>
 
             <?php endforeach; ?>
