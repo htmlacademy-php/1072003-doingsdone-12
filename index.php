@@ -1,6 +1,48 @@
 <?php
 // показывать или нет выполненные задачи
 $show_complete_tasks = rand(0, 1);
+
+$categories = ["Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
+
+$tasks = [
+    [
+        "task" => "Собеседование в IT компании",
+        "task_date" => "01.12.2019",
+        "category" => "Работа",
+        "completed" => false,
+    ],
+    [
+        "task" => "Выполнить тестовое задание",
+        "task_date" => "25.12.2019",
+        "category" => "Работа",
+        "completed" => false,
+    ],
+    [
+        "task" => "Сделать задание первого раздела",
+        "task_date" => "21.12.2019",
+        "category" => "Учеба",
+        "completed" => true,
+    ],
+    [
+        "task" => "Встреча с другом",
+        "task_date" => "22.12.2019",
+        "category" => "Входящие",
+        "completed" => false,
+    ],
+    [
+        "task" => "Купить корм для кота",
+        "task_date" => null,
+        "category" => "Домашние дела",
+        "completed" => false,
+    ],
+    [
+        "task" => "Заказать пиццу",
+        "task_date" => null,
+        "category" => "Домашние дела",
+        "completed" => false,
+    ],
+
+];
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -42,10 +84,12 @@ $show_complete_tasks = rand(0, 1);
 
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
+                        <?php foreach($categories as $val): ?>
                         <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link" href="#">Название проекта</a>
+                            <a class="main-navigation__list-item-link" href="#"><?= $val; ?></a>
                             <span class="main-navigation__list-item-count">0</span>
                         </li>
+                    <?php endforeach; ?>
                     </ul>
                 </nav>
 
@@ -78,35 +122,26 @@ $show_complete_tasks = rand(0, 1);
                 </div>
 
                 <table class="tasks">
-                    <tr class="tasks__item task">
-                        <td class="task__select">
-                            <label class="checkbox task__checkbox">
-                                <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
-                                <span class="checkbox__text">Сделать главную страницу Дела в порядке</span>
-                            </label>
-                        </td>
 
-                        <td class="task__file">
-                            <a class="download-link" href="#">Home.psd</a>
-                        </td>
+                    <?php foreach($tasks as $key => $val): ?>
+                    <?php if($val['completed'] === true AND !$show_complete_tasks) continue; ?>
+                        <tr class="tasks__item task<?=$val['completed'] ? '--completed' : ''?>">
+                            <td class="task__select">
+                                <label class="checkbox task__checkbox">
+                                    <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
+                                    <span class="checkbox__text"><?= $val['task']; ?></span>
+                                </label>
+                            </td>
 
-                        <td class="task__date"></td>
-                    </tr>
-                    <!--показывать следующий тег <tr/>, если переменная $show_complete_tasks равна единице-->
-                    <?php if($show_complete_tasks): ?>
-                        <tr class="tasks__item task task--completed">
-                          <td class="task__select">
-                            <label class="checkbox task__checkbox">
-                              <input class="checkbox__input visually-hidden" type="checkbox" checked>
-                              <span class="checkbox__text">Записаться на интенсив "Базовый PHP"</span>
-                            </label>
-                          </td>
-                          <td class="task__date">10.10.2019</td>
+                            <td class="task__file">
+                                <a class="download-link" href="#">Home.psd</a>
+                            </td>
 
-                          <td class="task__controls">
-                          </td>
+                            <td class="task_date"><?= $val['task_date']; ?></td>
                         </tr>
-                    <?php endif; ?>
+
+                    <?php endforeach; ?>
+
                 </table>
             </main>
         </div>
@@ -116,7 +151,7 @@ $show_complete_tasks = rand(0, 1);
 <footer class="main-footer">
     <div class="container">
         <div class="main-footer__copyright">
-            <p>© 2019, «Дела в порядке»</p>
+            <p>© 2019, "Дела в порядке"</p>
 
             <p>Веб-приложение для удобного ведения списка дел.</p>
         </div>
