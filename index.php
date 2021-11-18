@@ -43,6 +43,16 @@ $tasks = [
     ],
 
 ];
+
+function tasckCount ($array, $category) {
+    $tasckCount = 0;
+    foreach ($array as $val) {
+        if($val['category'] == $category) {
+            $tasckCount++;
+        }
+    }
+    return $tasckCount;
+};
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -87,7 +97,7 @@ $tasks = [
                         <?php foreach($categories as $val): ?>
                         <li class="main-navigation__list-item">
                             <a class="main-navigation__list-item-link" href="#"><?= $val; ?></a>
-                            <span class="main-navigation__list-item-count">0</span>
+                            <span class="main-navigation__list-item-count"><?= tasckCount($tasks, $val); ?></span>
                         </li>
                     <?php endforeach; ?>
                     </ul>
