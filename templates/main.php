@@ -6,7 +6,7 @@
             <ul class="main-navigation__list">
                 <?php foreach($categories as $val): ?>
                 <li class="main-navigation__list-item">
-                    <a class="main-navigation__list-item-link" href="#"><?= $val; ?></a>
+                    <a class="main-navigation__list-item-link" href="#"><?= htmlspecialchars($val); ?></a>
                     <span class="main-navigation__list-item-count"><?= tasckCount($tasks, $val); ?></span>
                 </li>
             <?php endforeach; ?>
@@ -45,11 +45,11 @@
 
             <?php foreach($tasks as $key => $val): ?>
             <?php if($val['completed'] === true AND !$show_complete_tasks) continue; ?>
-                <tr class="tasks__item task<?=$val['completed'] ? '--completed' : ''?>">
+                <tr class="tasks__item <?=$val['completed'] ? 'task--completed' : ''?> <?= check_time_completed($val['task_date']) ? 'task--important' : '' ?>">
                     <td class="task__select">
                         <label class="checkbox task__checkbox">
                             <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
-                            <span class="checkbox__text"><?= $val['task']; ?></span>
+                            <span class="checkbox__text"><?= htmlspecialchars($val['task']); ?></span>
                         </label>
                     </td>
 
@@ -57,7 +57,7 @@
                         <a class="download-link" href="#">Home.psd</a>
                     </td>
 
-                    <td class="task_date"><?= $val['task_date']; ?></td>
+                    <td class="task_date"><?= htmlspecialchars($val['task_date']); ?></td>
                 </tr>
 
             <?php endforeach; ?>
