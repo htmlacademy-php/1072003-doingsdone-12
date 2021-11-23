@@ -22,7 +22,7 @@ CREATE TABLE task (
   status BOOL DEFAULT 0,
   title VARCHAR(128) NOT NULL,
   file VARCHAR(255),
-  dt_end DATETIME,
+  dt_end DATE DEFAULT NULL,
   user_id INT UNSIGNED NOT NULL,
   project_id INT UNSIGNED NOT NULL
 );

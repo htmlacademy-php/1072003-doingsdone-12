@@ -2,17 +2,35 @@
 
 require_once('helpers.php');
 require_once('functions.php');
-require_once('data.php');
+require_once('connection.php');
+
+$userId = 2;
+
+$sql_project = "SELECT * FROM project WHERE user_id = '$userId'";
+$result = mysqli_query($con, $sql_project);
+$projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+if (!$projects) {
+    exit('Ошибка базы данных');
+}
+
+$sql_task = "SELECT * FROM task WHERE user_id = '$userId'";
+$result = mysqli_query($con, $sql_task);
+$tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+if (!$tasks) {
+    exit('Ошибка базы данных');
+}
+
 
 $content = include_template('main.php', [
-    'categories' => $categories,
+    'categories' => $projects,
     'tasks' => $tasks,
     'show_complete_tasks' => $show_complete_tasks,
     ]);
 
 $layout_content = include_template('layout.php', [
     'content' => $content,
-    'categories' => $categories,
     'title' => $title,
 ]);
 

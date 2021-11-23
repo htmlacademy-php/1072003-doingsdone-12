@@ -1,9 +1,13 @@
 <?php
 
-function tasckCount ($array, $category) {
+$show_complete_tasks = rand(0, 1);
+
+$title = "Дела в порядке";
+
+function tasckCount ($tasks, $projectId) {
     $tasckCount = 0;
-    foreach ($array as $val) {
-        if($val['category'] == $category) {
+    foreach ($tasks as $task) {
+        if($task['project_id'] == $projectId) {
             $tasckCount++;
         }
     }

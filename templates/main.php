@@ -6,8 +6,8 @@
             <ul class="main-navigation__list">
                 <?php foreach($categories as $val): ?>
                 <li class="main-navigation__list-item">
-                    <a class="main-navigation__list-item-link" href="#"><?= htmlspecialchars($val); ?></a>
-                    <span class="main-navigation__list-item-count"><?= tasckCount($tasks, $val); ?></span>
+                    <a class="main-navigation__list-item-link" href="#"><?= htmlspecialchars($val['name']); ?></a>
+                    <span class="main-navigation__list-item-count"><?= tasckCount($tasks, $val['id']); ?></span>
                 </li>
             <?php endforeach; ?>
             </ul>
@@ -44,12 +44,12 @@
         <table class="tasks">
 
             <?php foreach($tasks as $key => $val): ?>
-            <?php if($val['completed'] === true AND !$show_complete_tasks) continue; ?>
-                <tr class="tasks__item <?=$val['completed'] ? 'task--completed' : ''?> <?= check_time_completed($val['task_date']) ? 'task--important' : '' ?>">
+            <?php if($val['status'] AND !$show_complete_tasks) continue; ?>
+                <tr class="tasks__item <?=$val['status'] ? 'task--completed' : ''?> <?= check_time_completed($val['dt_end']) ? 'task--important' : '' ?>">
                     <td class="task__select">
                         <label class="checkbox task__checkbox">
                             <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
-                            <span class="checkbox__text"><?= htmlspecialchars($val['task']); ?></span>
+                            <span class="checkbox__text"><?= htmlspecialchars($val['title']); ?></span>
                         </label>
                     </td>
 
@@ -57,7 +57,7 @@
                         <a class="download-link" href="#">Home.psd</a>
                     </td>
 
-                    <td class="task__date"><?= htmlspecialchars($val['task_date']); ?></td>
+                    <td class="task__date"><?= htmlspecialchars($val['dt_end']); ?></td>
                 </tr>
 
             <?php endforeach; ?>
