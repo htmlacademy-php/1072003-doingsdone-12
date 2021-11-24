@@ -10,7 +10,7 @@ VALUES ('Входящие', 1),
        ('Домашние дела', 2),
        ('Авто', 3);
 
-INSERT INTO task (dt_add, status, title, file, dt_end, user_id, project_id)
+INSERT INTO task (dt_add, status, title, file, dt_completion, user_id, project_id)
 VALUES (DATE_ADD(NOW(), INTERVAL - 2 DAY), 0, 'Собеседование в IT компании', null, '2021-12-12', 2, 3),
        (NOW(), 0, 'Выполнить тестовое задание', null, '2021-11-24', 2, 3),
        (DATE_ADD(NOW(), INTERVAL - 1 DAY), 1, 'Сделать задание первого раздела', null, '2021-11-26', 1, 2),
