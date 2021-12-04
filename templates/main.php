@@ -5,9 +5,11 @@
         <nav class="main-navigation">
             <ul class="main-navigation__list">
                 <?php foreach($projects as $project): ?>
-                <li class="main-navigation__list-item">
-                    <a class="main-navigation__list-item-link" href="#"><?= htmlspecialchars($project['name']) ?></a>
-                    <span class="main-navigation__list-item-count"><?= tasck_count($tasks, $project['id']) ?></span>
+                <li class="main-navigation__list-item<?= $_GET['project_id'] === $project['id'] ? '--active' : '' ?>">
+                    <a class="main-navigation__list-item-link" href="
+                                ?project_id=<?=$project['id']?>"><?= htmlspecialchars($project['name']) ?></a>
+                    <span class="main-navigation__list-item-count"><?= tasck_count($tasks, $project['id']) ?>
+                    </span>
                 </li>
             <?php endforeach; ?>
             </ul>
