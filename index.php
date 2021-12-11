@@ -7,7 +7,7 @@ require_once('functions.php');
 $show_complete_tasks = rand(0, 1);
 $title = "Дела в порядке";
 $user_id = 2;
-$project_id = $_GET['project_id'] ?? '';
+$project_id = filter_input(INPUT_GET, 'project_id', FILTER_SANITIZE_NUMBER_INT);
 
 $sql_project = "SELECT * FROM project WHERE user_id = $user_id";
 $result = mysqli_query($con, $sql_project);
@@ -26,7 +26,7 @@ if (!$tasks) {
 }
 
 if ($project_id) {
-    $sql_task_project = "SELECT * FROM task WHERE user_id = $user_id AND project_id = $project_id";
+    $sql_task_project = $sql_task . " AND project_id = $project_id";
     $result = mysqli_query($con, $sql_task_project);
     $task_project = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
@@ -37,8 +37,10 @@ if ($project_id) {
 
     $content = include_template('main.php', [
     'projects' => $projects,
-    'tasks' => $task_project,
+    'task_project' => $task_project,
     'show_complete_tasks' => $show_complete_tasks,
+    'project_id' => $project_id,
+    'tasks' => $tasks,
     ]);
 } else {
 
@@ -46,6 +48,7 @@ if ($project_id) {
         'projects' => $projects,
         'tasks' => $tasks,
         'show_complete_tasks' => $show_complete_tasks,
+        'project_id' => $project_id,
         ]);
     }
 
