@@ -1,13 +1,13 @@
 <?php
 
-function tasck_count ($tasks, $projectId) {
-    $tasckCount = 0;
+function tasck_count ($tasks, $project_id) {
+    $task_сount = 0;
     foreach ($tasks as $task) {
-        if($task['project_id'] == $projectId) {
-            $tasckCount++;
+        if($task['project_id'] == $project_id) {
+            $task_сount++;
         }
     }
-    return $tasckCount;
+    return $task_сount;
 };
 
 function check_time_completed ($date) {
