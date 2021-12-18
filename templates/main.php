@@ -8,7 +8,7 @@
                 <li class="main-navigation__list-item <?= $project_id === $project['id'] ? 'main-navigation__list-item--active' : '' ?>">
                     <a class="main-navigation__list-item-link" href="
                                 ?project_id=<?=$project['id']?>"><?= htmlspecialchars($project['name']) ?></a>
-                    <span class="main-navigation__list-item-count"><?= tasck_count($tasks, $project['id']) ?>
+                    <span class="main-navigation__list-item-count"><?= tasck_count($all_tasks, $project['id']) ?>
                     </span>
                 </li>
             <?php endforeach; ?>
@@ -44,8 +44,8 @@
         </div>
 
         <table class="tasks">
-            <?php if(!$project_id) $task_project = $tasks; ?>
-            <?php foreach($task_project as $key => $task): ?>
+
+            <?php foreach($project_tasks as $key => $task): ?>
             <?php if($task['status'] AND !$show_complete_tasks) continue; ?>
                 <tr class="tasks__item <?=$task['status'] ? 'task--completed' : ''?> <?= (check_time_completed($task['dt_completion']) AND ! $task['status']) ? 'task--important' : '' ?>">
                     <td class="task__select">
