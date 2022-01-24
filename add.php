@@ -6,7 +6,7 @@ require_once('connection.php');
 
 $user_id = 2;
 
-$sql_projects = "SELECT * FROM project";
+$sql_projects = "SELECT * FROM project WHERE user_id = $user_id";
 $result = mysqli_query($con, $sql_projects);
 $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $content = include_template('add-template.php', [
         'projects' => $projects,
         'all_tasks' => $all_tasks,
-        'project_id' => $project_id
+        'projects_id' => $projects_id
         ]);
 }
 
