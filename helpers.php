@@ -142,3 +142,42 @@ function include_template($name, array $data = []) {
 
     return $result;
 }
+
+function validateDate($value) {
+
+    $current_date = date('Y-m-d');
+
+    if(!empty($value)) {
+        if(!is_date_valid($value)) {
+            return "Значение должно быть в формате «ГГГГ-ММ-ДД»";
+        }
+        if(strtotime($value) < strtotime($current_date))  {
+            return "Указанная дата должна быть больше либо равна текущей дате";
+        }
+    }
+
+    return null;
+}
+
+function validateLength($value, $min, $max) {
+    if ($value) {
+        $len = strlen($value);
+        if ($len < $min or $len > $max) {
+            return "Значение должно быть от $min до $max символов";
+        }
+    }
+
+    return null;
+}
+
+function getPostVal($name) {
+    return filter_input(INPUT_POST, $name);
+}
+
+function validateProject($id, $allowed_list) {
+    if (!in_array($id, $allowed_list)) {
+        return "Указан несуществующий проект";
+    }
+
+    return null;
+}
