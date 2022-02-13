@@ -5,10 +5,8 @@ require_once('functions.php');
 require_once('connection.php');
 
 $user_id = 2;
-
-$sql_projects = "SELECT * FROM project WHERE user_id = $user_id";
-$result = mysqli_query($con, $sql_projects);
-$projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+$projects = get_user_projects($con, $user_id);
+$errors = [];
 
 if (!$projects) {
     exit('Ошибка базы данных');
@@ -16,17 +14,10 @@ if (!$projects) {
 
 $projects_id = array_column($projects, 'id');
 
-$sql_tasks = 'SELECT * FROM task WHERE user_id = ' . $user_id;
-$result = mysqli_query($con, $sql_tasks);
-$all_tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-if (!$all_tasks) {
-    exit('Ошибка базы данных');
-}
+$all_tasks = get_user_tasks($con, $user_id);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $required = ['name', 'project'];
-    $errors = [];
 
     $rules = [
         'name' => function($value) {
@@ -56,9 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors = array_filter($errors);
 
 
-    if (count($errors)) {
-        $content = include_template('add-template.php', ['errors' => $errors, 'projects' => $projects, 'all_tasks' => $all_tasks, 'project_id' => $project_id]);
-    } else {
+    if (!count($errors)) {
         if (isset($_FILES['file']) && !empty($_FILES['file']['name'])) {
 
             $tmp_name = $_FILES['file']['tmp_name'];
@@ -71,18 +60,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
 
-        if(empty(getPostVal('date'))) {
-            $dt_completion = NULL;
-        } else {
+        if(!empty(getPostVal('date'))) {
             $dt_completion = getPostVal('date');
+        } else {
+            $dt_completion = NULL;
         }
 
         $new_task = [getPostVal('name'), $task_file, $dt_completion, getPostVal('project')];
 
-        $sql_add_task = 'INSERT INTO task (dt_add, status, user_id, title, file, dt_completion, project_id) VALUES (NOW(), 0, 2, ?, ?, ?, ?)';
-
-        $stmt = db_get_prepare_stmt($con, $sql_add_task, $new_task);
-        $res = mysqli_stmt_execute($stmt);
+        $res = add_new_task($con, $new_task);
 
         if(!$res) {
             exit('Ошибка базы данных');
@@ -91,15 +77,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header('Location: index.php');
         exit;
     }
-
-} else {
-
-    $content = include_template('add-template.php', [
-        'projects' => $projects,
-        'all_tasks' => $all_tasks,
-        'projects_id' => $projects_id
-        ]);
 }
+
+$content = include_template('add-template.php', [
+    'errors' => $errors,
+    'projects' => $projects,
+    'all_tasks' => $all_tasks,
+    'projects_id' => $projects_id
+    ]);
 
 $layout_content = include_template('layout.php', [
     'content' => $content,
