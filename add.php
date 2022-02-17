@@ -4,12 +4,12 @@ require_once('helpers.php');
 require_once('functions.php');
 require_once('connection.php');
 
-$user_id = 2;
+$user_id = $_SESSION['user']['id'];
 $projects = get_user_projects($con, $user_id);
 $errors = [];
 
 if (!$projects) {
-    exit('Ошибка базы данных');
+    exit('Ошибка: для добавления новой задачи необходимо создать проект');
 }
 
 $projects_id = array_column($projects, 'id');

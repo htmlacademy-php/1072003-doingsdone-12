@@ -24,7 +24,7 @@
         <form class="form"  action="add.php" method="post" autocomplete="off" enctype="multipart/form-data">
           <div class="form__row">
             <label class="form__label" for="name">Название <sup>*</sup></label>
-            <input class="form__input <?= isset($errors['name']) ? 'form__input--error' : '' ?>" type="text" name="name" id="name" value="<?= getPostVal('name'); ?>" placeholder="Введите название">
+            <input class="form__input <?= isset($errors['name']) ? 'form__input--error' : '' ?>" type="text" name="name" id="name" value="<?= getPostVal('name') ?>" placeholder="Введите название">
             <p class="form__message"><?= isset($errors['name']) ? $errors['name'] : '' ?></p>
           </div>
 
@@ -62,6 +62,6 @@
             <input class="button" type="submit" name="" value="Добавить">
           </div>
         </form>
-        <p class="form__message"><?= !empty($errors) ? 'Пожалуйста, исправьте ошибки в форме' : '' ?> </p>
+        <p class="form__message"><?= !empty($errors) ? 'Пожалуйста, исправьте ошибки в форме' : '' ?></p>
       </main>
     </div>

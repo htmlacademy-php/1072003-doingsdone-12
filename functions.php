@@ -72,8 +72,39 @@ function get_task_project ($con, $user_id, $project_id) {
  * @return С помощью подготовленного выражения добавляет новую задачу пользователя в базу данных
  */
 function add_new_task ($con, $new_task) {
-        $sql_add_task = 'INSERT INTO task (dt_add, status, user_id, title, file, dt_completion, project_id) VALUES (NOW(), 0, 2, ?, ?, ?, ?)';
+        $sql_add_task = 'INSERT INTO task (dt_add, status, user_id, title, file, dt_completion, project_id)
+                        VALUES (NOW(), 0, 2, ?, ?, ?, ?)';
         $stmt = db_get_prepare_stmt($con, $sql_add_task, $new_task);
 
         return mysqli_stmt_execute($stmt);
+}
+
+/**
+ * Добавление нового пользователя в базу данных
+ * @param $con Параметры подключения к базе данных
+ * @param $new_user Массив данных для добавления нового пользователя
+ *
+ * @return С помощью подготовленного выражения добавляет нового пользователя в базу данных
+ */
+
+function add_new_user ($con, $new_user) {
+    $sql_add_user = 'INSERT INTO user (dt_add, email, name, password)
+                    VALUES (NOW(), ?, ?, ?)';
+    $stmt = db_get_prepare_stmt($con, $sql_add_user, $new_user);
+
+    return mysqli_stmt_execute($stmt);
+}
+
+/**
+ * Возвращает данные пользователя по его email
+ * @param $con Параметры подключения к базе данных
+ * @param $email Строка с email переданным через форму
+ *
+ * @return Возвращает массив с данными пользователя
+ */
+function get_user_data ($con, $email) {
+    $sql = "SELECT * FROM user WHERE email = '$email'";
+    $res = mysqli_query($con, $sql);
+
+    return mysqli_fetch_array($res, MYSQLI_ASSOC);
 }
