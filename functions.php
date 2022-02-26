@@ -73,7 +73,7 @@ function get_task_project ($con, $user_id, $project_id) {
  */
 function add_new_task ($con, $new_task) {
         $sql_add_task = 'INSERT INTO task (dt_add, status, user_id, title, file, dt_completion, project_id)
-                        VALUES (NOW(), 0, 2, ?, ?, ?, ?)';
+                        VALUES (NOW(), 0, ?, ?, ?, ?, ?)';
         $stmt = db_get_prepare_stmt($con, $sql_add_task, $new_task);
 
         return mysqli_stmt_execute($stmt);
@@ -91,6 +91,21 @@ function add_new_user ($con, $new_user) {
     $sql_add_user = 'INSERT INTO user (dt_add, email, name, password)
                     VALUES (NOW(), ?, ?, ?)';
     $stmt = db_get_prepare_stmt($con, $sql_add_user, $new_user);
+
+    return mysqli_stmt_execute($stmt);
+}
+
+/**
+ * Добавление нового проекта в базу данных
+ * @param $con Параметры подключения к базе данных
+ * @param $new_project Массив данных для добавления нового проекта пользователя
+ *
+ * @return С помощью подготовленного выражения добавляет новый проект в базу данных
+ */
+function add_new_project ($con, $new_project) {
+    $sql_add_project = 'INSERT INTO project (name, user_id) VALUES (?, ?)';
+
+    $stmt = db_get_prepare_stmt($con, $sql_add_project, $new_project);
 
     return mysqli_stmt_execute($stmt);
 }

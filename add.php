@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $dt_completion = NULL;
         }
 
-        $new_task = [getPostVal('name'), $task_file, $dt_completion, getPostVal('project')];
+        $new_task = [$user_id, getPostVal('name'), $task_file, $dt_completion, getPostVal('project')];
 
         $res = add_new_task($con, $new_task);
 
