@@ -123,3 +123,12 @@ function get_user_data ($con, $email) {
 
     return mysqli_fetch_array($res, MYSQLI_ASSOC);
 }
+
+function search_task($con, $search) {
+    $sql_search_task = 'SELECT * FROM task WHERE MATCH(title) AGAINST (?)';
+    $stmt = db_get_prepare_stmt($con, $sql_search_task, $search);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+
+    return mysqli_fetch_all($res, MYSQLI_ASSOC);
+}
