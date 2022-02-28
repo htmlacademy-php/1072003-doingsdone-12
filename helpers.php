@@ -1,4 +1,9 @@
 <?php
+
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+
 /**
  * Проверяет переданную дату на соответствие формату 'ГГГГ-ММ-ДД'
  *
@@ -178,6 +183,23 @@ function validateProject($id, $allowed_list) {
     if (!in_array($id, $allowed_list)) {
         return "Указан несуществующий проект";
     }
+
+    return null;
+}
+
+function validateEmail($value, $con) {
+   if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+        return "Введите корректный email";
+    }
+
+    $email = mysqli_real_escape_string($con, $_POST['email']);
+
+        $sql_email_user = "SELECT id FROM user WHERE email = '$email'";
+        $res = mysqli_query($con, $sql_email_user);
+
+        if (mysqli_num_rows($res) > 0) {
+            return "Пользователь с этим email уже зарегистрирован";
+        }
 
     return null;
 }
