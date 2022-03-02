@@ -28,7 +28,7 @@ if(empty($user_id)) {
 
     mysqli_query($con, 'CREATE FULLTEXT INDEX search_task ON task(title)');
 
-    if($_GET['search_submit']) {
+    if(!empty($_GET['search_submit'])) {
        $project_tasks = search_task($con, [$_GET['search']]) ?? '';
        if (empty($project_tasks)) {
             $error = 'По вашему запросу ничего не найдено';
