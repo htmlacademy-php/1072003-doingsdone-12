@@ -132,3 +132,19 @@ function search_task($con, $search) {
 
     return mysqli_fetch_all($res, MYSQLI_ASSOC);
 }
+
+function set_task_status ($con) {
+        $sql_task_status = 'SELECT status FROM task WHERE id = ' . $_GET['task_id'];
+        $res = mysqli_query($con, $sql_task_status);
+        $result = mysqli_fetch_array($res, MYSQLI_ASSOC);
+
+        if($result['status'] === "0") {
+            $task_status = 1;
+        } elseif ($result['status'] === "1") {
+            $task_status = 0;
+        }
+
+        $sql_status_update = 'UPDATE task SET status = ' . $task_status . ' WHERE id = ' . $_GET['task_id'];
+
+        mysqli_query($con, $sql_status_update);
+}

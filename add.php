@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $rules = [
         'name' => function($value) {
-            return validateLength($value, 10, 128);
+            return validateLength($value, 3, 128);
         },
         'project' => function($value) use ($projects_id) {
             return validateProject($value, $projects_id);

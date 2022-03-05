@@ -20,6 +20,12 @@ if(empty($user_id)) {
 
     $all_tasks = get_user_tasks($con, $user_id);
 
+    if (isset($_GET['check'])) {
+        set_task_status($con);
+        header('Location:/');
+        exit;
+    }
+
     if ($project_id) {
         $project_tasks = get_task_project($con, $user_id, $project_id);
     } else {
