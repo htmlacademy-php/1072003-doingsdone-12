@@ -4,7 +4,7 @@ require_once('connection.php');
 require_once('helpers.php');
 require_once('functions.php');
 
-$show_complete_tasks = rand(0, 1);
+$show_complete_tasks = $_GET['show_completed'] ?? false;
 $title = "Дела в порядке";
 $user_id = $_SESSION['user']['id'] ?? '';
 $project_id = filter_input(INPUT_GET, 'project_id', FILTER_SANITIZE_NUMBER_INT);
