@@ -63,6 +63,24 @@ function get_task_project ($con, $user_id, $project_id) {
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
+function get_tasks_filter ($con, $user_id, $filter) {
+    $filterSql = "";
+        if ($filter == 'today') {
+            $filterSql = "dt_completion = CURDATE()";
+        } else if ($filter == 'tomorrow') {
+            $filterSql = "dt_completion = ADDDATE(CURDATE(),INTERVAL 1 DAY)";
+        } else if ($filter == 'expired') {
+            $filterSql = "dt_completion < CURDATE()";
+        } else if ($filter = '' || $filter = 'all') {
+            $filterSql = '1';
+        }
+
+    $sql_filter_tasks = 'SELECT * FROM task WHERE user_id = ' . $user_id . ' AND  ' . $filterSql;
+    $result = mysqli_query($con, $sql_filter_tasks);
+
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
 /**
  * Добавление новой задачи в базу данных
  * @param $con Параметры подключения к базе данных
@@ -124,8 +142,8 @@ function get_user_data ($con, $email) {
     return mysqli_fetch_array($res, MYSQLI_ASSOC);
 }
 
-function search_task($con, $search) {
-    $sql_search_task = 'SELECT * FROM task WHERE MATCH(title) AGAINST (?)';
+function search_task($con, $search, $user_id) {
+    $sql_search_task = 'SELECT * FROM task WHERE MATCH(title) AGAINST (?) AND user_id = ' . $user_id;
     $stmt = db_get_prepare_stmt($con, $sql_search_task, $search);
     mysqli_stmt_execute($stmt);
     $res = mysqli_stmt_get_result($stmt);
@@ -133,8 +151,8 @@ function search_task($con, $search) {
     return mysqli_fetch_all($res, MYSQLI_ASSOC);
 }
 
-function set_task_status ($con) {
-        $sql_task_status = 'SELECT status FROM task WHERE id = ' . $_GET['task_id'];
+function set_task_status ($con, $task_id) {
+        $sql_task_status = 'SELECT status FROM task WHERE id = ' . $task_id;
         $res = mysqli_query($con, $sql_task_status);
         $result = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
@@ -144,7 +162,7 @@ function set_task_status ($con) {
             $task_status = 0;
         }
 
-        $sql_status_update = 'UPDATE task SET status = ' . $task_status . ' WHERE id = ' . $_GET['task_id'];
+        $sql_status_update = 'UPDATE task SET status = ' . $task_status . ' WHERE id = ' . $task_id;
 
         mysqli_query($con, $sql_status_update);
 }

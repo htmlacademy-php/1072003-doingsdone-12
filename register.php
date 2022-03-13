@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors = array_filter($errors);
 
     if (!count($errors)) {
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $password = password_hash($new_user['password'], PASSWORD_DEFAULT);
 
         $new_user = [getPostVal('email'), getPostVal('name'), $password];
 

@@ -6,6 +6,7 @@ require_once('connection.php');
 
 $user_id = $_SESSION['user']['id'];
 $projects = get_user_projects($con, $user_id);
+$new_project_name = filter_input(INPUT_POST, 'name');
 $errors = [];
 
 $projects_id = array_column($projects, 'id');
@@ -15,11 +16,11 @@ $all_tasks = get_user_tasks($con, $user_id);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    if (empty($_POST['name'])) {
+    if (empty($new_project_name)) {
         $errors['name'] = 'Поле не заполнено';
     }
 
-    if (in_array(($_POST['name']), $projects_name)) {
+    if (in_array($new_project_name, $projects_name)) {
         $errors['name'] = 'Проект с таким названием уже существует';
     }
 
