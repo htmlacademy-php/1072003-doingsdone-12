@@ -21,12 +21,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $user = get_user_data($con, $email);
 
+    if(!count($errors) and $email !== $user['email']) {
+        $errors['email'] = 'Такой пользователь не найден';
+    }
+
     if (!count($errors) and $user) {
         if (!password_verify($form['password'], $user['password'])) {
             $errors['password'] = 'Неверный пароль';
         }
-    } else {
-        $errors['email'] = 'Такой пользователь не найден';
     }
 
     if (!count($errors)) {

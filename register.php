@@ -7,7 +7,6 @@ require_once('connection.php');
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $form = $_POST;
     $required = ['email', 'password', 'name'];
 
     $rules = [
@@ -38,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors = array_filter($errors);
 
     if (!count($errors)) {
-        $password = password_hash($form['password'], PASSWORD_DEFAULT);
+        $password = password_hash($new_user['password'], PASSWORD_DEFAULT);
 
         $new_user = [getPostVal('email'), getPostVal('name'), $password];
 

@@ -31,14 +31,13 @@
 
         <div class="tasks-controls">
             <nav class="tasks-switch">
-                <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-                <a href="/" class="tasks-switch__item">Повестка дня</a>
-                <a href="/" class="tasks-switch__item">Завтра</a>
-                <a href="/" class="tasks-switch__item">Просроченные</a>
+                <a href="/index.php?filter=all" class="tasks-switch__item <?= $filter == '' || $filter == 'all' ? 'tasks-switch__item--active' : '' ?> ">Все задачи</a>
+                <a href="/index.php?filter=today" class="tasks-switch__item <?= $filter == 'today' ? 'tasks-switch__item--active' : '' ?> ">Повестка дня</a>
+                <a href="/index.php?filter=tomorrow" class="tasks-switch__item <?= $filter == 'tomorrow' ? 'tasks-switch__item--active' : '' ?>">Завтра</a>
+                <a href="/index.php?filter=expired" class="tasks-switch__item <?= $filter == 'expired' ? 'tasks-switch__item--active' : '' ?>">Просроченные</a>
             </nav>
 
             <label class="checkbox">
-                <!--добавить сюда атрибут "checked", если переменная $show_complete_tasks равна единице-->
                 <input class="checkbox__input visually-hidden show_completed" type="checkbox" <?= $show_complete_tasks ? "checked" : "" ?>>
                 <span class="checkbox__text">Показывать выполненные</span>
             </label>
@@ -51,7 +50,7 @@
                 <tr class="tasks__item <?=$task['status'] ? 'task--completed' : ''?> <?= (check_time_completed($task['dt_completion']) AND ! $task['status']) ? 'task--important' : '' ?>">
                     <td class="task__select">
                         <label class="checkbox task__checkbox">
-                            <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
+                            <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="<?= $task['id'] ?>" <?= $task['status'] === "1" ? "checked" : "" ?>>
                             <span class="checkbox__text"><?= htmlspecialchars($task['title']) ?></span>
                         </label>
                     </td>
