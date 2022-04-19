@@ -1,0 +1,14 @@
+{
+    "name": "vendor/doingsdone",
+    "description": "project doingsdone",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shilyakova Tatiana"
+        }
+    ],
+    "require": {
+        "symfony/mailer": "^5.4"
+    }
+}
