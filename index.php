@@ -16,7 +16,7 @@ $project_id = filter_input(INPUT_GET, 'project_id', FILTER_SANITIZE_NUMBER_INT);
 $error = '';
 $task_id = filter_input(INPUT_GET, 'task_id');
 
-if(empty($user_id)) {
+if (empty($user_id)) {
     $content = include_template('guest.php');
     $layout_content = include_template('layout-guest.php', [
     'content' => $content,
@@ -32,7 +32,6 @@ if(empty($user_id)) {
         exit;
     }
 
-
     if ($project_id) {
         $project_tasks = get_task_project($con, $user_id, $project_id);
     } else {
@@ -40,8 +39,8 @@ if(empty($user_id)) {
     }
 
     if (isset($search_submit)) {
-       $project_tasks = search_task($con, [$search], $user_id) ?? '';
-       if (empty($project_tasks)) {
+        $project_tasks = search_task($con, [$search], $user_id) ?? '';
+        if (empty($project_tasks)) {
             $error = 'По вашему запросу ничего не найдено';
         }
     }
@@ -54,11 +53,11 @@ if(empty($user_id)) {
         $show_complete_tasks = $_SESSION['user']['show_completed'];
     }
 
-    if(isset($filter)) {
+    if (isset($filter)) {
         $project_tasks = get_tasks_filter($con, $user_id, $filter);
     }
 
-$content = include_template('main.php', [
+    $content = include_template('main.php', [
     'projects' => $projects,
     'all_tasks' => $all_tasks,
     'project_tasks' => $project_tasks,
@@ -68,7 +67,7 @@ $content = include_template('main.php', [
     'filter' => $filter,
 ]);
 
-$layout_content = include_template('layout.php', [
+    $layout_content = include_template('layout.php', [
     'content' => $content,
     'title' => $title,
 ]);

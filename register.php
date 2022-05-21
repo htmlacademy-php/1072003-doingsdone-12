@@ -10,13 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $required = ['email', 'password', 'name'];
 
     $rules = [
-        'email' => function($value) use ($con) {
+        'email' => function ($value) use ($con) {
             return validateEmail($value, $con);
         },
-        'password' => function($value) {
+        'password' => function ($value) {
             return validateLength($value, 6, 255);
         },
-        'name' => function($value) {
+        'name' => function ($value) {
             return validateLength($value, 3, 64);
         },
     ];
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $res = add_new_user($con, $new_user);
 
-        if(!$res) {
+        if (!$res) {
             exit('Ошибка базы данных');
         }
 

@@ -20,13 +20,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $required = ['name', 'project'];
 
     $rules = [
-        'name' => function($value) {
+        'name' => function ($value) {
             return validateLength($value, 3, 128);
         },
-        'project' => function($value) use ($projects_id) {
+        'project' => function ($value) use ($projects_id) {
             return validateProject($value, $projects_id);
         },
-        'date' => function($value) {
+        'date' => function ($value) {
             return validateDate($value);
         }
     ];
@@ -49,28 +49,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (!count($errors)) {
         if (isset($_FILES['file']) && !empty($_FILES['file']['name'])) {
-
             $tmp_name = $_FILES['file']['tmp_name'];
             $filename = $_FILES['file']['name'];
             $filename = uniqid() . $filename;
             move_uploaded_file($tmp_name, 'uploads/' . $filename);
             $task_file = 'uploads/' . $filename;
         } else {
-            $task_file = NULL;
+            $task_file = null;
         }
 
 
-        if(!empty(getPostVal('date'))) {
+        if (!empty(getPostVal('date'))) {
             $dt_completion = getPostVal('date');
         } else {
-            $dt_completion = NULL;
+            $dt_completion = null;
         }
 
         $new_task = [$user_id, getPostVal('name'), $task_file, $dt_completion, getPostVal('project')];
 
         $res = add_new_task($con, $new_task);
 
-        if(!$res) {
+        if (!$res) {
             exit('Ошибка базы данных');
         }
 
