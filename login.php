@@ -7,7 +7,6 @@ require_once('connection.php');
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
     $form = $_POST;
     $required = ['email', 'password'];
 
@@ -21,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $user = get_user_data($con, $email);
 
-    if(!count($errors) and $email !== $user['email']) {
+    if (!count($errors) and $email !== $user['email']) {
         $errors['email'] = 'Такой пользователь не найден';
     }
 
@@ -48,4 +47,3 @@ $layout_content = include_template('layout.php', [
     ]);
 
 print($layout_content);
-

@@ -18,7 +18,8 @@ ini_set('display_startup_errors', 1);
  *
  * @return bool true при совпадении с форматом 'ГГГГ-ММ-ДД', иначе false
  */
-function is_date_valid(string $date) : bool {
+function is_date_valid(string $date): bool
+{
     $format_to_check = 'Y-m-d';
     $dateTimeObj = date_create_from_format($format_to_check, $date);
 
@@ -34,7 +35,8 @@ function is_date_valid(string $date) : bool {
  *
  * @return mysqli_stmt Подготовленное выражение
  */
-function db_get_prepare_stmt($link, $sql, $data = []) {
+function db_get_prepare_stmt($link, $sql, $data = [])
+{
     $stmt = mysqli_prepare($link, $sql);
 
     if ($stmt === false) {
@@ -51,11 +53,9 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
 
             if (is_int($value)) {
                 $type = 'i';
-            }
-            else if (is_string($value)) {
+            } elseif (is_string($value)) {
                 $type = 's';
-            }
-            else if (is_double($value)) {
+            } elseif (is_double($value)) {
                 $type = 'd';
             }
 
@@ -101,7 +101,7 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
  *
  * @return string Рассчитанная форма множественнго числа
  */
-function get_noun_plural_form (int $number, string $one, string $two, string $many): string
+function get_noun_plural_form(int $number, string $one, string $two, string $many): string
 {
     $number = (int) $number;
     $mod10 = $number % 10;
@@ -131,7 +131,8 @@ function get_noun_plural_form (int $number, string $one, string $two, string $ma
  * @param array $data Ассоциативный массив с данными для шаблона
  * @return string Итоговый HTML
  */
-function include_template($name, array $data = []) {
+function include_template($name, array $data = [])
+{
     $name = 'templates/' . $name;
     $result = '';
 
@@ -148,15 +149,15 @@ function include_template($name, array $data = []) {
     return $result;
 }
 
-function validateDate($value) {
-
+function validateDate($value)
+{
     $current_date = date('Y-m-d');
 
-    if(!empty($value)) {
-        if(!is_date_valid($value)) {
+    if (!empty($value)) {
+        if (!is_date_valid($value)) {
             return "Значение должно быть в формате «ГГГГ-ММ-ДД»";
         }
-        if(strtotime($value) < strtotime($current_date))  {
+        if (strtotime($value) < strtotime($current_date)) {
             return "Указанная дата должна быть больше либо равна текущей дате";
         }
     }
@@ -164,7 +165,8 @@ function validateDate($value) {
     return null;
 }
 
-function validateLength($value, $min, $max) {
+function validateLength($value, $min, $max)
+{
     if ($value) {
         $len = strlen($value);
         if ($len < $min or $len > $max) {
@@ -175,11 +177,13 @@ function validateLength($value, $min, $max) {
     return null;
 }
 
-function getPostVal($name) {
+function getPostVal($name)
+{
     return filter_input(INPUT_POST, $name);
 }
 
-function validateProject($id, $allowed_list) {
+function validateProject($id, $allowed_list)
+{
     if (!in_array($id, $allowed_list)) {
         return "Указан несуществующий проект";
     }
@@ -187,19 +191,20 @@ function validateProject($id, $allowed_list) {
     return null;
 }
 
-function validateEmail($value, $con) {
-   if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+function validateEmail($value, $con)
+{
+    if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
         return "Введите корректный email";
     }
 
     $email = mysqli_real_escape_string($con, $_POST['email']);
 
-        $sql_email_user = "SELECT id FROM user WHERE email = '$email'";
-        $res = mysqli_query($con, $sql_email_user);
+    $sql_email_user = "SELECT id FROM user WHERE email = '$email'";
+    $res = mysqli_query($con, $sql_email_user);
 
-        if (mysqli_num_rows($res) > 0) {
-            return "Пользователь с этим email уже зарегистрирован";
-        }
+    if (mysqli_num_rows($res) > 0) {
+        return "Пользователь с этим email уже зарегистрирован";
+    }
 
     return null;
 }

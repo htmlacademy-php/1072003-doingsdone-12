@@ -15,7 +15,6 @@ $projects_name = array_column($projects, 'name');
 $all_tasks = get_user_tasks($con, $user_id);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
     if (empty($new_project_name)) {
         $errors['name'] = 'Поле не заполнено';
     }
@@ -31,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $res = add_new_project($con, $new_project);
 
-        if(!$res) {
+        if (!$res) {
             exit('Ошибка базы данных');
         }
 

@@ -4,7 +4,7 @@
 
         <nav class="main-navigation">
             <ul class="main-navigation__list">
-                <?php foreach($projects as $project): ?>
+                <?php foreach ($projects as $project): ?>
                 <li class="main-navigation__list-item <?= $project_id === $project['id'] ? 'main-navigation__list-item--active' : '' ?>">
                     <a class="main-navigation__list-item-link" href="
                                 ?project_id=<?=$project['id']?>"><?= htmlspecialchars($project['name']) ?></a>
@@ -45,18 +45,19 @@
 
         <table class="tasks">
 
-            <?php foreach($project_tasks as $key => $task): ?>
-            <?php if($task['status'] AND !$show_complete_tasks) continue; ?>
-                <tr class="tasks__item <?=$task['status'] ? 'task--completed' : ''?> <?= (check_time_completed($task['dt_completion']) AND ! $task['status']) ? 'task--important' : '' ?>">
+            <?php foreach ($project_tasks as $key => $task): ?>
+            <?php if ($task['status'] and !$show_complete_tasks) {
+    continue;
+} ?>
+                <tr class="tasks__item <?=$task['status'] ? 'task--completed' : ''?> <?= (check_time_completed($task['dt_completion']) and ! $task['status']) ? 'task--important' : '' ?>">
                     <td class="task__select">
                         <label class="checkbox task__checkbox">
                             <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="<?= $task['id'] ?>" <?= $task['status'] === "1" ? "checked" : "" ?>>
                             <span class="checkbox__text"><?= htmlspecialchars($task['title']) ?></span>
                         </label>
                     </td>
-
                     <td class="task__file">
-                        <a class="download-link" href="<?= htmlspecialchars($task['file']) ?>"> <?= substr($task['file'], 21); ?> </a>
+                        <a class="<?=$task['file'] ? 'download-link' : ''?>" href="<?= htmlspecialchars($task['file']) ?>"> <?= substr($task['file'], 21); ?> </a>
                     </td>
 
                     <td class="task__date"><?= htmlspecialchars($task['dt_completion']) ?></td>
