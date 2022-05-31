@@ -93,7 +93,7 @@ function get_tasks_filter($con, $user_id, $filter)
 {
     $filterSql = "";
     if ($filter == 'today') {
-        $filterSql = "dt_completion = CURDATE()";
+        $filterSql = "dt_completion = CURDATE() OR dt_completion IS NULL";
     } elseif ($filter == 'tomorrow') {
         $filterSql = "dt_completion = ADDDATE(CURDATE(),INTERVAL 1 DAY)";
     } elseif ($filter == 'expired') {
