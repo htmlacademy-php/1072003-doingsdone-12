@@ -4,9 +4,15 @@ require_once('helpers.php');
 require_once('functions.php');
 require_once('connection.php');
 
-$user_id = $_SESSION['user']['id'];
-$projects = get_user_projects($con, $user_id);
+$user_id = $_SESSION['user']['id'] ?? '';
 $errors = [];
+
+if (empty($user_id)) {
+    header('Location: index.php');
+    exit;
+}
+
+$projects = get_user_projects($con, $user_id);
 
 if (!$projects) {
     exit('Ошибка: для добавления новой задачи необходимо создать проект');

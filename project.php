@@ -4,15 +4,19 @@ require_once('helpers.php');
 require_once('functions.php');
 require_once('connection.php');
 
-$user_id = $_SESSION['user']['id'];
-$projects = get_user_projects($con, $user_id);
-$new_project_name = filter_input(INPUT_POST, 'name');
+$user_id = $_SESSION['user']['id'] ?? '';
 $errors = [];
+$new_project_name = filter_input(INPUT_POST, 'name');
 
+if (empty($user_id)) {
+    header('Location: index.php');
+    exit;
+}
+
+$projects = get_user_projects($con, $user_id);
+$all_tasks = get_user_tasks($con, $user_id);
 $projects_id = array_column($projects, 'id');
 $projects_name = array_column($projects, 'name');
-
-$all_tasks = get_user_tasks($con, $user_id);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($new_project_name)) {

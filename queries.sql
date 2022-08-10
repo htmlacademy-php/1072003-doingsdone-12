@@ -1,7 +1,7 @@
-INSERT INTO user (dt_add, email, name, password)
-VALUES (NOW(), 'rand@mail.com', 'Rand', '12345'),
-       (NOW(), 'met@mail.com', 'Met', '98765'),
-       (NOW(), 'tom@mail.com', 'Tom', '98765');
+INSERT INTO user (email, name, password)
+VALUES ('rand@mail.com', 'Rand', '$2y$10$YNx6cugYYrZdaBkB8PKl0e2S2zU3/zUWI36HAZRe/gpa651HvJtGa'),
+       ('met@mail.com', 'Met', '$2y$10$VuW7YMATeWtSfsGGlXKNR.91PZKCUig6dD5ilFoUI1Rd6ZyUbfXlq'),
+       ('tom@mail.com', 'Tom', '$2y$10$ZuxjHqmnx7jXxfKbi7NNJO3O.VQijhPL4cp3yeLe30AT0rVp0Trdu');
 
 INSERT INTO project (name, user_id)
 VALUES ('Входящие', 1),
