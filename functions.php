@@ -16,7 +16,7 @@ function tasck_count($tasks, $project_id)
         }
     }
     return $task_сount;
-};
+}
 
 /**
  * Подсчёт разницы между датой выполнения задачи и текущей датой
@@ -33,7 +33,7 @@ function check_time_completed($date)
     $days = $diff->format("%d");
 
     return !$days;
-};
+}
 
 /**
  * Получение списка проектов пользователя
@@ -92,17 +92,17 @@ function get_task_project($con, $user_id, $project_id)
 function get_tasks_filter($con, $user_id, $filter)
 {
     $filterSql = "";
-    if ($filter == 'today') {
-        $filterSql = "dt_completion = CURDATE()";
-    } elseif ($filter == 'tomorrow') {
+    if ($filter === 'today') {
+        $filterSql = "dt_completion = CURDATE() OR dt_completion IS NULL";
+    } elseif ($filter === 'tomorrow') {
         $filterSql = "dt_completion = ADDDATE(CURDATE(),INTERVAL 1 DAY)";
-    } elseif ($filter == 'expired') {
+    } elseif ($filter === 'expired') {
         $filterSql = "dt_completion < CURDATE()";
-    } elseif ($filter = '' || $filter = 'all') {
+    } elseif ($filter === '' || $filter === 'all') {
         $filterSql = '1';
     }
 
-    $sql_filter_tasks = 'SELECT * FROM task WHERE user_id = ' . $user_id . ' AND  ' . $filterSql;
+    $sql_filter_tasks = 'SELECT * FROM task WHERE user_id = ' . $user_id . ' AND (' . $filterSql . ')';
     $result = mysqli_query($con, $sql_filter_tasks);
 
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -114,12 +114,12 @@ function get_tasks_filter($con, $user_id, $filter)
  * @param array $new_task Массив данных для добавления новой задачи
  * @param int $project_id Идентификатор проекта
  *
- * @return С помощью подготовленного выражения добавляет новую задачу пользователя в базу данных
+ * @return bool в случае успешного выполнения возвращает true, с помощью подготовленного выражения добавляет новую задачу пользователя в базу данных
  */
 function add_new_task($con, $new_task)
 {
-    $sql_add_task = 'INSERT INTO task (dt_add, status, user_id, title, file, dt_completion, project_id)
-                        VALUES (NOW(), 0, ?, ?, ?, ?, ?)';
+    $sql_add_task = 'INSERT INTO task (status, user_id, title, file, dt_completion, project_id)
+                        VALUES (0, ?, ?, ?, ?, ?)';
     $stmt = db_get_prepare_stmt($con, $sql_add_task, $new_task);
 
     return mysqli_stmt_execute($stmt);
@@ -130,13 +130,13 @@ function add_new_task($con, $new_task)
  * @param mysqli $con Параметры подключения к базе данных
  * @param array $new_user Массив данных для добавления нового пользователя
  *
- * @return С помощью подготовленного выражения добавляет нового пользователя в базу данных
+ * @return bool в случае успешного выполнения возвращает true, с помощью подготовленного выражения добавляет нового пользователя в базу данных
  */
 
 function add_new_user($con, $new_user)
 {
-    $sql_add_user = 'INSERT INTO user (dt_add, email, name, password)
-                    VALUES (NOW(), ?, ?, ?)';
+    $sql_add_user = 'INSERT INTO user (email, name, password)
+                    VALUES (?, ?, ?)';
     $stmt = db_get_prepare_stmt($con, $sql_add_user, $new_user);
 
     return mysqli_stmt_execute($stmt);
@@ -147,7 +147,7 @@ function add_new_user($con, $new_user)
  * @param mysqli $con Параметры подключения к базе данных
  * @param array $new_project Массив данных для добавления нового проекта пользователя
  *
- * @return С помощью подготовленного выражения добавляет новый проект в базу данных
+ * @return bool в случае успешного выполнения возвращает true, с помощью подготовленного выражения добавляет новый проект в базу данных
  */
 function add_new_project($con, $new_project)
 {
@@ -183,7 +183,7 @@ function get_user_data($con, $email)
  */
 function search_task($con, $search, $user_id)
 {
-    $sql_search_task = 'SELECT * FROM task WHERE MATCH(title) AGAINST (?) AND user_id = ' . $user_id;
+    $sql_search_task = "SELECT * FROM task WHERE MATCH(title) AGAINST (?) AND user_id = $user_id";
     $stmt = db_get_prepare_stmt($con, $sql_search_task, $search);
     mysqli_stmt_execute($stmt);
     $res = mysqli_stmt_get_result($stmt);
