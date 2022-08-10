@@ -132,7 +132,6 @@ function add_new_task($con, $new_task)
  *
  * @return bool в случае успешного выполнения возвращает true, с помощью подготовленного выражения добавляет нового пользователя в базу данных
  */
-
 function add_new_user($con, $new_user)
 {
     $sql_add_user = 'INSERT INTO user (email, name, password)
