@@ -4,6 +4,10 @@ require_once('helpers.php');
 require_once('functions.php');
 require_once('connection.php');
 
+/**
+ * @var mysqli $con
+ */
+
 $user_id = $_SESSION['user']['id'] ?? '';
 $errors = [];
 
@@ -37,7 +41,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     ];
 
-    $new_task = filter_input_array(INPUT_POST, ['name' => FILTER_DEFAULT, 'project' => FILTER_DEFAULT, 'date' => FILTER_DEFAULT], true);
+    $new_task = filter_input_array(
+        INPUT_POST,
+        [
+            'name' => FILTER_DEFAULT,
+            'project' => FILTER_DEFAULT,
+            'date' => FILTER_DEFAULT
+        ]
+    );
 
     foreach ($new_task as $key => $value) {
         if (isset($rules[$key])) {
@@ -71,7 +82,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $dt_completion = null;
         }
 
-        $new_task = [$user_id, getPostVal('name'), $task_file, $dt_completion, getPostVal('project')];
+        $new_task = [
+            $user_id,
+            getPostVal('name'),
+            $task_file,
+            $dt_completion,
+            getPostVal('project')
+        ];
 
         $res = add_new_task($con, $new_task);
 
@@ -89,7 +106,7 @@ $content = include_template('add-template.php', [
     'projects' => $projects,
     'all_tasks' => $all_tasks,
     'projects_id' => $projects_id
-    ]);
+]);
 
 $layout_content = include_template('layout.php', [
     'content' => $content,

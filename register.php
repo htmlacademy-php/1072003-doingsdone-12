@@ -4,6 +4,10 @@ require_once('helpers.php');
 require_once('functions.php');
 require_once('connection.php');
 
+/**
+ * @var mysqli $con
+ */
+
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -21,7 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         },
     ];
 
-    $new_user = filter_input_array(INPUT_POST, ['email' => FILTER_DEFAULT, 'password' => FILTER_DEFAULT, 'name' => FILTER_DEFAULT], true);
+    $new_user = filter_input_array(
+        INPUT_POST,
+        [
+            'email' => FILTER_DEFAULT,
+            'password' => FILTER_DEFAULT,
+            'name' => FILTER_DEFAULT
+        ]
+    );
 
     foreach ($new_user as $key => $value) {
         if (isset($rules[$key])) {

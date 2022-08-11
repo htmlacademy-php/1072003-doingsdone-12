@@ -1,7 +1,7 @@
 INSERT INTO user (email, name, password)
-VALUES ('rand@mail.com', 'Rand', '$2y$10$YNx6cugYYrZdaBkB8PKl0e2S2zU3/zUWI36HAZRe/gpa651HvJtGa'),
-       ('met@mail.com', 'Met', '$2y$10$VuW7YMATeWtSfsGGlXKNR.91PZKCUig6dD5ilFoUI1Rd6ZyUbfXlq'),
-       ('tom@mail.com', 'Tom', '$2y$10$ZuxjHqmnx7jXxfKbi7NNJO3O.VQijhPL4cp3yeLe30AT0rVp0Trdu');
+VALUES ('rand@mail.com', 'Rand', '$2y$10$ggJsglfjDNxoFeyfkMCO8eA2ZaJCvGx9B7atqmw78h7ItdqVtRsHS'), #12345
+       ('met@mail.com', 'Met', '$2y$10$motbGXQSgoxyFRENcThFLe9m.LoVOGXcLfRByvt.co7Q674Qy5jOO'), #98765
+       ('tom@mail.com', 'Tom', '$2y$10$bbZv7i3FObkqGVutdbjuW.oecPS8NZNIGyVC9uB505AbjQNzyLxWe'); #98765
 
 INSERT INTO project (name, user_id)
 VALUES ('Входящие', 1),
