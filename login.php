@@ -4,6 +4,10 @@ require_once('helpers.php');
 require_once('functions.php');
 require_once('connection.php');
 
+/**
+ * @var mysqli $con
+ */
+
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

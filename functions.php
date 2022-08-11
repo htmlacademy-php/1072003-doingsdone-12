@@ -7,15 +7,15 @@
  *
  * @return int Количество задач
  */
-function tasck_count($tasks, $project_id)
+function task_count($tasks, $project_id)
 {
-    $task_сount = 0;
+    $task_count = 0;
     foreach ($tasks as $task) {
         if ($task['project_id'] == $project_id) {
-            $task_сount++;
+            $task_count++;
         }
     }
-    return $task_сount;
+    return $task_count;
 }
 
 /**
@@ -27,7 +27,7 @@ function tasck_count($tasks, $project_id)
 function check_time_completed($date)
 {
     $dt_completion = date_create($date);
-    $dt_now = date_create("now");
+    $dt_now = date_create();
     $diff = date_diff($dt_completion, $dt_now);
 
     $days = $diff->format("%d");
@@ -109,12 +109,11 @@ function get_tasks_filter($con, $user_id, $filter)
 }
 
 /**
- * Добавление новой задачи в базу данных
+ * Добавление новой задачи в базу данных с помощью подготовленного выражения
+ *
  * @param mysqli $con Параметры подключения к базе данных
  * @param array $new_task Массив данных для добавления новой задачи
- * @param int $project_id Идентификатор проекта
- *
- * @return bool в случае успешного выполнения возвращает true, с помощью подготовленного выражения добавляет новую задачу пользователя в базу данных
+ * @return bool
  */
 function add_new_task($con, $new_task)
 {
@@ -202,12 +201,7 @@ function set_task_status($con, $task_id)
     $sql_task_status = 'SELECT status FROM task WHERE id = ' . $task_id;
     $res = mysqli_query($con, $sql_task_status);
     $result = mysqli_fetch_array($res, MYSQLI_ASSOC);
-
-    if ($result['status'] === "0") {
-        $task_status = 1;
-    } elseif ($result['status'] === "1") {
-        $task_status = 0;
-    }
+    $task_status = (int) !$result['status'];
 
     $sql_status_update = 'UPDATE task SET status = ' . $task_status . ' WHERE id = ' . $task_id;
 

@@ -4,6 +4,10 @@ require_once('helpers.php');
 require_once('functions.php');
 require_once('connection.php');
 
+/**
+ * @var mysqli $con
+ */
+
 $user_id = $_SESSION['user']['id'] ?? '';
 $errors = [];
 $new_project_name = filter_input(INPUT_POST, 'name');

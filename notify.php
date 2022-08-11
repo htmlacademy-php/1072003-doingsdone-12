@@ -9,6 +9,10 @@ require_once('helpers.php');
 require_once('functions.php');
 require_once('connection.php');
 
+/**
+ * @var mysqli $con
+ */
+
 $login = 'keks@phpdemo.ru';
 $pass = 'htmlacademy';
 $dsn = 'smtp://4234:32434@smtp.mailtrap.io:2525?encryption=tls&auth_mode=login';
@@ -43,11 +47,10 @@ foreach ($recipients as $recipient) {
 
     $message->html($messageContent);
 
-    $result = $mailer->send($message);
-
-    if ($result) {
+    try {
+        $mailer->send($message);
         print("Рассылка для {$recipient['name']} успешно отправлена");
-    } else {
+    } catch (Exception $e) {
         print("Не удалось отправить рассылку для {$recipient['name']}");
     }
 }

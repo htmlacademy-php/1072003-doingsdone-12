@@ -4,6 +4,10 @@ require_once('connection.php');
 require_once('helpers.php');
 require_once('functions.php');
 
+/**
+ * @var mysqli $con
+ */
+
 $show_completed = filter_input(INPUT_GET, 'show_completed');
 $show_complete_tasks = 0;
 $check = filter_input(INPUT_GET, 'check');
