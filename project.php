@@ -19,10 +19,9 @@ if (empty($user_id)) {
 
 $projects = get_user_projects($con, $user_id);
 $all_tasks = get_user_tasks($con, $user_id);
-$projects_id = array_column($projects, 'id');
 $projects_name = array_column($projects, 'name');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($new_project_name)) {
         $errors['name'] = 'Поле не заполнено';
     }
@@ -50,9 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $content = include_template('project-template.php', [
     'errors' => $errors,
     'projects' => $projects,
-    'all_tasks' => $all_tasks,
-    'projects_id' => $projects_id
-    ]);
+    'all_tasks' => $all_tasks
+]);
 
 $layout_content = include_template('layout.php', [
     'content' => $content,
