@@ -11,7 +11,7 @@ function task_count($tasks, $project_id)
 {
     $task_count = 0;
     foreach ($tasks as $task) {
-        if ($task['project_id'] == $project_id) {
+        if ($task['project_id'] === $project_id) {
             $task_count++;
         }
     }

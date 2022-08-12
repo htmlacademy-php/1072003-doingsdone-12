@@ -23,10 +23,9 @@ if (!$projects) {
 }
 
 $projects_id = array_column($projects, 'id');
-
 $all_tasks = get_user_tasks($con, $user_id);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $required = ['name', 'project'];
 
     $rules = [
@@ -104,8 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $content = include_template('add-template.php', [
     'errors' => $errors,
     'projects' => $projects,
-    'all_tasks' => $all_tasks,
-    'projects_id' => $projects_id
+    'all_tasks' => $all_tasks
 ]);
 
 $layout_content = include_template('layout.php', [

@@ -61,15 +61,21 @@ if (empty($user_id)) {
         $project_tasks = get_tasks_filter($con, $user_id, $filter);
     }
 
-    $content = include_template('main.php', [
-    'projects' => $projects,
-    'all_tasks' => $all_tasks,
-    'project_tasks' => $project_tasks,
-    'show_complete_tasks' => $show_complete_tasks,
-    'project_id' => $project_id,
-    'error' => $error,
-    'filter' => $filter,
-]);
+    $content = include_template(
+        'main.php',
+        [
+            'projects' => $projects,
+            'all_tasks' => $all_tasks,
+            'project_tasks' => $project_tasks,
+            'show_complete_tasks' => $show_complete_tasks ? "checked" : "",
+            'project_id' => $project_id,
+            'error' => $error,
+            'filter_all' => $filter === '' || $filter === 'all' ? 'tasks-switch__item--active' : '',
+            'filter_today' => $filter === 'today' ? 'tasks-switch__item--active' : '',
+            'filter_tomorrow' => $filter === 'tomorrow' ? 'tasks-switch__item--active' : '',
+            'filter_expired' => $filter === 'expired' ? 'tasks-switch__item--active' : '',
+        ]
+    );
 
     $layout_content = include_template('layout.php', [
     'content' => $content,

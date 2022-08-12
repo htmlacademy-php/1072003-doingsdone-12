@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
-  <link rel="stylesheet" href="../css/normalize.css">
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body class = "body-background">
@@ -15,11 +15,11 @@
     <div class="container">
       <header class="main-header">
         <a href="/">
-          <img src="../img/logo.png" width="153" height="42" alt="Логитип Дела в порядке">
+          <img src="/img/logo.png" width="153" height="42" alt="Логитип Дела в порядке">
         </a>
 
         <div class="main-header__side">
-          <a class="main-header__side-item button button--transparent" href="login.php">Войти</a>
+          <a class="main-header__side-item button button--transparent" href="/login.php">Войти</a>
         </div>
       </header>
       <?= $content  ?>
@@ -77,7 +77,7 @@
         <span class="visually-hidden">Разработано:</span>
 
         <a href="https://htmlacademy.ru/intensive/php">
-          <img src="../img/htmlacademy.svg" alt="HTML Academy" width="118" height="40">
+          <img src="/img/htmlacademy.svg" alt="HTML Academy" width="118" height="40">
         </a>
       </div>
     </div>
