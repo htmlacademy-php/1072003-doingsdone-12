@@ -39,7 +39,7 @@
           <?php foreach ($projects as $project) : ?>
             <option value=<?=$project['id'] ?>
             <?= (int)getPostVal('project') === (int)$project['id'] ? "selected" : ""; ?>
-            ><?=$project['name'] ?></option>
+            ><?=htmlspecialchars($project['name']) ?></option>
           <?php endforeach; ?>
         </select>
         <p class="form__message"><?= $errors['project'] ?? '' ?></p>
@@ -47,7 +47,7 @@
 
       <div class="form__row">
         <label class="form__label" for="date">Дата выполнения</label>
-        <input class="form__input form__input--date <?= isset($errors['date']) ? 'form__input--error' : '' ?>" type="text" name="date" id="date" value="<?= getPostVal('date') ?>" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
+        <input class="form__input form__input--date <?= isset($errors['date']) ? 'form__input--error' : '' ?>" type="text" name="date" id="date" value="<?= htmlspecialchars(getPostVal('date')) ?>" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
         <p class="form__message"><?= $errors['date'] ?? '' ?></p>
       </div>
 
